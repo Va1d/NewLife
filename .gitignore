@@ -1,0 +1,65 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# PyTorch & ML
+checkpoint/
+runs/
+TB_Log/
+*.pth
+*.pkl
+*.pickle
+profiler_logs/
+
+# Data
+data/
+*.csv
+*.xlsx
+*.parquet
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Documentation
+.sphinx/
+build/
+dist/
+
+# Logs
+*.log
+logs/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Project specific
+*.egg-info/
+.eggs/
+*.egg
+finished_episodes.txt
+bot_activity_analysis.txt

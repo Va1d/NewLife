@@ -1,0 +1,105 @@
+====================================================================================================
+OPTIMAL MODEL SIZING ANALYSIS
+====================================================================================================
+
+Dataset Characteristics:
+  Total sessions: 1396
+  Samples per session: 256
+  Total training samples: ~357K
+  Input dimension: 468
+  Sequence length: max 388
+  Output dimension: 1 (binary)
+  Label positive rate: ~18% (bot activity)
+
+Overfitting Test Configuration:
+  Train sessions: 2 (~512 samples)
+  Test session: 1 (~256 samples)
+  Goal: Find minimum model that CAN overfit (train loss <0.2, test loss >0.5)
+
+Sample batch shapes:
+  X: torch.Size([256, 388, 468])
+  Y: torch.Size([256])
+  Seq lengths: torch.Size([256])
+
+====================================================================================================
+MODEL 1: TransformerEncoder
+====================================================================================================
+
+Size | d_model | heads | ff   | layers | Params  | Train Loss | Test Loss | Can Overfit?
+------------------------------------------------------------------------------------------
+Tiny |      32 |     2 |   64 |      1 |   18010 |     0.4617 |    0.4307 | ✗ NO
+Small |      64 |     4 |  256 |      2 |  118778 |     0.4887 |    0.4702 | ✗ NO
+Medium |     128 |     8 |  512 |      3 |  632314 |     0.4858 |    0.4667 | ✗ NO
+Large |     256 |     8 | 1024 |      4 | 3233914 |     0.4844 |    0.4699 | ✗ NO
+
+====================================================================================================
+MODEL 2: TemporalFusionTransformer (TFT)
+====================================================================================================
+
+Size | d_model | heads | ff   | layers | Params  | Train Loss | Test Loss | Can Overfit?
+------------------------------------------------------------------------------------------
+Tiny |      32 |     2 |   64 |      1 |   32762 |     0.4856 |    0.4647 | ✗ NO
+Small |      64 |     4 |  256 |      2 |  143482 |     0.4866 |    0.4631 | ✗ NO
+Medium |     128 |     8 |  512 |      2 |  532602 |     0.4865 |    0.4695 | ✗ NO
+Large |     256 |     8 | 1024 |      2 | 2048122 |     0.4960 |    0.4715 | ✗ NO
+
+====================================================================================================
+MODEL 3: BayesianTransformer
+====================================================================================================
+
+Size | d_model | heads | ff   | layers | Params  | Train Loss | Test Loss | Can Overfit?
+------------------------------------------------------------------------------------------
+Tiny |      32 |     2 |   64 |      1 |   27291 |     0.4084 |    0.4416 | ✗ NO
+Small |      64 |     4 |  256 |      2 |  137339 |     0.4989 |    0.4780 | ✗ NO
+Medium |     128 |     8 |  512 |      2 |  471163 |     0.5528 |    0.5381 | ✗ NO
+Large |     256 |     8 | 1024 |      3 | 2518395 |     0.5980 |    0.7322 | ✗ NO
+
+====================================================================================================
+MODEL 4: MCDropoutTransformer
+====================================================================================================
+
+Size | d_model | heads | ff   | layers | Params  | Train Loss | Test Loss | Can Overfit?
+------------------------------------------------------------------------------------------
+Tiny |      32 |     2 |   64 |      1 |   18010 |     0.3898 |    0.3701 | ✗ NO
+Small |      64 |     4 |  256 |      2 |  118778 |     0.4891 |    0.4680 | ✗ NO
+Medium |     128 |     8 |  512 |      2 |  434042 |     0.4875 |    0.4657 | ✗ NO
+Large |     256 |     8 | 1024 |      3 | 2444154 |     0.4886 |    0.4692 | ✗ NO
+
+====================================================================================================
+ANALYSIS COMPLETE
+====================================================================================================
+
+====================================================================================================
+RECOMMENDATIONS FOR PRODUCTION TRAINING
+====================================================================================================
+
+Rationale:
+  • Minimum overfitting capability: Model should pass tiny data test (train<0.2, test>0.5)
+  • Production size: Use 70-80% of parameters that CAN overfit
+  • This prevents overfitting on full dataset while maintaining capacity to learn
+
+TransformerEncoder:
+  ✗ Cannot overfit even at largest. Consider:
+    - Increase num_layers
+    - Reduce regularization more
+    - Use current largest: Large (3,233,914 params)
+
+TemporalFusionTransformer:
+  ✗ Cannot overfit even at largest. Consider:
+    - Increase num_layers
+    - Reduce regularization more
+    - Use current largest: Large (2,048,122 params)
+
+BayesianTransformer:
+  ✗ Cannot overfit even at largest. Consider:
+    - Increase num_layers
+    - Reduce regularization more
+    - Use current largest: Large (2,518,395 params)
+
+MCDropoutTransformer:
+  ✗ Cannot overfit even at largest. Consider:
+    - Increase num_layers
+    - Reduce regularization more
+    - Use current largest: Large (2,444,154 params)
+
+====================================================================================================

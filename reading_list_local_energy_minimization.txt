@@ -1,0 +1,74 @@
+Reading List: Local Energy Minimization & Oscillatory Neural Learning
+========================================================================
+
+Your hypothesis: Neurons minimize firing (energy) via local rules + oscillatory 
+weight modulation to achieve pattern detection without backpropagation.
+
+Relevant prior work to review:
+
+1. SPARSE / EFFICIENT CODING
+   ----------------------------
+   - Olshausen & Field (1996) - "Emergence of simple-cell receptive field 
+     properties by learning a sparse code for natural images"
+     Nature 381:607-609
+     
+   - Olshausen & Field (1997) - "Sparse coding with an overcomplete basis set: 
+     A strategy employed by V1?"
+     Vision Research 37(23):3311-3325
+
+2. PREDICTIVE CODING / FREE ENERGY PRINCIPLE
+   --------------------------------------------
+   - Rao & Ballard (1999) - "Predictive coding in the visual cortex: 
+     A functional interpretation of some extra-classical receptive-field effects"
+     Nature Neuroscience 2(1):79-87
+     
+   - Friston (2010) - "The free-energy principle: A unified brain theory?"
+     Nature Reviews Neuroscience 11(2):127-138
+
+3. LOCAL LEARNING RULES
+   ----------------------
+   - Oja (1982) - "Simplified neuron model as a principal component analyzer"
+     Journal of Mathematical Biology 15(3):267-273
+     
+   - Bienenstock, Cooper & Munro (1982) - "Theory for the development of 
+     neuron selectivity: Orientation specificity and binocular interaction 
+     in visual cortex"
+     Journal of Neuroscience 2(1):32-48
+
+4. OSCILLATORY GATING / COMMUNICATION
+   ------------------------------------
+   - Fries (2005) - "A mechanism for cognitive dynamics: Neuronal communication 
+     through neuronal coherence"
+     Trends in Cognitive Sciences 9(10):474-480
+     
+   - Fries (2015) - "Rhythms for Cognition: Communication through Coherence"
+     Neuron 88(1):220-235
+
+5. ENERGY-BASED / EQUILIBRIUM PROPAGATION
+   ----------------------------------------
+   - Scellier & Bengio (2017) - "Equilibrium Propagation: Bridging the Gap 
+     Between Energy-Based Models and Backpropagation"
+     Frontiers in Computational Neuroscience 11:24
+
+KEY CONNECTIONS TO YOUR HYPOTHESIS:
+------------------------------------
+- Sparse coding: Neurons try to fire rarely → energy efficiency
+- Predictive coding: Minimize surprise → fewer spikes when pattern is learned
+- Oscillatory coherence: Time-varying effective weights via phase/frequency
+- Local rules: No backprop, just local activity-dependent updates
+- Energy minimization: Global objective emerges from local constraints
+
+YOUR NOVEL ANGLE:
+-----------------
+Combining oscillatory weight modulation with anti-Hebbian firing suppression
+as a unified local mechanism (not just oscillatory communication OR sparse
+coding, but both together as complementary parts of energy minimization).
+
+NEXT STEPS:
+-----------
+1. Read papers above to understand existing mechanisms
+2. Run experiment_local_energy.py sweep to test hypothesis
+3. Compare oscillatory vs non-oscillatory results
+4. Look for emergent pattern selectivity with minimal firing
+
+Good luck!
