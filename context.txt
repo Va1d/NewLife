@@ -1,0 +1,52 @@
+=== EXPERIMENT_SANDBOX.PY ARCHITECTURE ===
+
+MOTIVATION (from DishBrain 2022):
+Cultured neurons learn predictable patterns → get better at control tasks.
+Key insight: Learning creates competence → competence creates more learning capacity.
+We're building: Local learning + emergent pain/pleasure + self-reinforcing competence.
+
+CORE: WaveMatchingNeuron
+- Each neuron learns to predict external input using internal wave (freq/amp/phase per input)
+- Error-driven updates: gradient on mismatch between internal_wave and external signal
+- NO backprop: purely local Hebbian-like learning
+
+THREE KEY MECHANISMS:
+
+1. ENERGY OSCILLATION (metronome-like learning rhythm)
+   Config: energy_osc_freq=0.01, energy_osc_amp=0.2, energy_osc_phase=0.0
+   Effect: lr_budget = 1 + amp*sin(2π*freq*t + phase)
+   Purpose: Neurons use external rhythm as timing reference for pattern matching
+
+2. COMPETENCE-DRIVEN LEARNING (self-reinforcing)
+   Config: competence_window=50, competence_threshold=0.05, competence_boost=2.0
+   Logic: If error improves by >threshold over window, boost lr by 2x for next steps
+   Purpose: Learning begets learning—success creates appetite for harder tasks
+
+3. HEDONIC STATE (pain/pleasure as emergent valence)
+   Config: hedonic_error_weight=1.0, hedonic_stability_weight=0.5, hedonic_coherence_window=10
+   Drives:
+     - Pleasure from error reduction (error_t-1 - error_t)
+     - Pleasure from smooth learning (low volatility)
+     - Pleasure from output consistency (low variance)
+   Effect: Positive hedonic state multiplies lr by (1 + hedonic*0.5)
+   Output: hedonic_trace per neuron shows valence trajectory
+
+CURRENT STATUS:
+- Single neuron running 2000 steps
+- Learns wave patterns, converges to low energy state
+- Hedonic state near zero at end (stable equilibrium)
+- Plotly graphs: spike rate, energy proxy, activity energy, hedonic state (3 rows)
+
+RUN:
+cd /home/bo/Py/NewLife && source .venv/bin/activate && python .venv/src/experiment_sandbox.py
+
+NEXT EXPERIMENTS:
+- Multi-neuron with conflicting hedonic drives (game theory)
+- Hedonic signal tampering (self-deception emergence)
+- Complex multi-scale oscillations
+- Reward hacking / hedonic wireheading
+
+KEY FILES:
+- experiment_sandbox.py (current modular framework)
+- experiment_local_energy.py (single neuron prototype, validated)
+- model.py, train.py, lb.py (type-annotated, strict checking)

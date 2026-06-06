@@ -1,0 +1,9 @@
+Your "Architecture Checkpoint" for next time:
+Model: Stateful Transformer (4 layers, 
+, 8 heads).
+Data: 1,500 sessions, variable chunks (~8 events + time_shift (0,0)).
+Training: Truth-Override loop with KV-Caching and manual .backward() per step.
+Hardware: Dual 4090s (24GB each) + 128GB RAM.
+Strategy: Warmup + Cosine scheduler (
+) with HParams monitoring.
+If you ever run into a RuntimeError or the HParams show the model is diverging, just paste that summary and ask, "Hey, my Run-on Rate is spiking, how do I adjust the attention masking?" and I'll immediately know the full context of your 4090 setup.
